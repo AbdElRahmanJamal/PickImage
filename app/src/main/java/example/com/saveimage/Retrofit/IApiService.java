@@ -15,6 +15,9 @@ public interface IApiService {
     @POST("saveImageRetrofitToDB.php")
     Call<Results> createTask(@Field("encoded_string") String encoded_string,@Field("image_name")String image_name);
 
+    @POST("testObject.php")
+    Call<Results> createTask(@Body ImageData imageData);
+
 
 
 

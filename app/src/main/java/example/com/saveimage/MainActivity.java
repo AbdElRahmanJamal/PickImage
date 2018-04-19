@@ -35,6 +35,7 @@ import java.util.Map;
 import example.com.saveimage.Retrofit.IApiService;
 import example.com.saveimage.Retrofit.IApiServiceInterfaceCreation;
 
+import example.com.saveimage.Retrofit.ImageData;
 import example.com.saveimage.Retrofit.Results;
 import example.com.saveimage.permission.CameraPermission;
 import example.com.saveimage.permission.ReadGalleryPermission;
@@ -117,21 +118,41 @@ public class MainActivity extends AppCompatActivity {
 
 
     public void saveDataUsingRetrofit() {
-        mService.createTask(encoded_stringBase64, "ImageNameUnique1").enqueue(new Callback<Results>() {
+//        mService.createTask(encoded_stringBase64, "ImageNameUnique1").enqueue(new Callback<Results>() {
+//            @Override
+//            public void onResponse(Call<Results> call, retrofit2.Response<Results> response) {
+//                if (progressDialog.isShowing()) {
+//                    progressDialog.dismiss();
+//                    Toast.makeText(MainActivity.this, "Done", Toast.LENGTH_LONG).show();
+//                }
+//            }
+//
+//            @Override
+//            public void onFailure(Call<Results> call, Throwable t) {
+//                if (progressDialog.isShowing()) {
+//                    progressDialog.dismiss();
+//                    Toast.makeText(MainActivity.this, "Fail", Toast.LENGTH_LONG).show();
+//                }
+//            }
+//        });
+
+        //to make it more easy i used object instead of using fields it is more easy and reliable
+        mService.createTask(new ImageData(encoded_stringBase64,"testImageName")).enqueue(new Callback<Results>() {
             @Override
             public void onResponse(Call<Results> call, retrofit2.Response<Results> response) {
+                Log.d( "onResponse: ",call.toString()+"   "+response.body().getResult());
                 if (progressDialog.isShowing()) {
                     progressDialog.dismiss();
-                    Toast.makeText(MainActivity.this, "Done", Toast.LENGTH_LONG).show();
                 }
             }
 
             @Override
             public void onFailure(Call<Results> call, Throwable t) {
+                Log.d( "onResponse: ",call.toString()+"   "+t.getMessage());
                 if (progressDialog.isShowing()) {
                     progressDialog.dismiss();
-                    Toast.makeText(MainActivity.this, "Fail", Toast.LENGTH_LONG).show();
                 }
+
             }
         });
     }
